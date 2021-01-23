@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {
+  Router,
+  Event,
+  NavigationStart,
+  NavigationEnd,
+  NavigationError,
+} from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,13 +13,26 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class AppComponent {
   name;
-  constructor(private route: ActivatedRoute) {}
+  constructor(private router: Router) {}
+
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      console.log(params);
-      
-      this.name = params['name'];
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        // Show loading indicator
+        console.log(event);
+      }
+
+      if (event instanceof NavigationEnd) {
+        // Hide loading indicator
+        console.log(event);
+      }
+
+      if (event instanceof NavigationError) {
+        // Hide loading indicator
+
+        // Present error to user
+        console.log(event.error);
+      }
     });
   }
-  
 }
