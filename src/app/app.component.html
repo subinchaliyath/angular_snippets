@@ -4,7 +4,14 @@
 <!-- basic nav -->
 <nav>
   <ul>
-    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+    <li>
+      <a
+        routerLink="/home"
+        [queryParams]="{ name: 'passing to home' }"
+        routerLinkActive="active"
+        >Home</a
+      >
+    </li>
     <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
   </ul>
 </nav>
