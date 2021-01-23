@@ -6,6 +6,7 @@ import {
   NavigationEnd,
   NavigationError,
 } from '@angular/router';
+import {filter} from 'rxjs/operators'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,23 +17,9 @@ export class AppComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        // Show loading indicator
-        console.log(event);
-      }
-
-      if (event instanceof NavigationEnd) {
-        // Hide loading indicator
-        console.log(event);
-      }
-
-      if (event instanceof NavigationError) {
-        // Hide loading indicator
-
-        // Present error to user
-        console.log(event.error);
-      }
+    this.router.events
+    .pipe(filter((event:Event)=> event instanceof NavigationStart))
+    .subscribe((event: Event) => { console.log(event);
     });
   }
 }
